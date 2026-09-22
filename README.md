@@ -1,30 +1,48 @@
-# Life.exe
+# LIFE.EXE — Smart Mood-Based Decision Engine
 
-Life.exe is a C++ DSA-based decision engine that helps users explore activity choices based on factors such as mood, time, effort, skill gain, goal match and risk.
+LIFE.EXE is a C++ based decision engine that helps users choose suitable activities based on their available time, effort, skills, goals, risk level, and current mood.
 
-## Tech Stack
+The project combines Data Structures and Algorithms with a simple web interface to generate personalized activity recommendations.
+
+## Features
+
+- Mood-based activity recommendations
+- Decision Tree based decision-making
+- Score-based recommendation system
+- Time and effort consideration
+- Skill gain and goal matching
+- Risk and mood boost factors
+- C++ decision engine
+- Python backend
+- Web-based interface
+
+## Technologies Used
 
 - C++
 - Python
-- FastAPI
 - HTML
 - CSS
+- FastAPI
+- Data Structures & Algorithms
 
-## DSA Concepts
+## DSA Concepts Used
 
-- Decision Tree
-- DFS
-- Backtracking
-- Priority Queue
-- Vector
-- Unordered Map
+- Decision Trees
+- Tree Traversal
 - Recursion
+- Vectors
+- Queues
+- Hash Maps
 - Smart Pointers
 
 ## Project Structure
 
-- `main.cpp` - Core C++ decision engine
-- `app.py` - Python backend
-- `index.html` - Web interface
-- `style.css` - Frontend styling
-- `requirements.txt` - Python dependencies
+```text
+life.exe/
+├── main.cpp
+├── app.py
+├── index.html
+├── style.css
+├── requirements.txt
+├── README.md
+└── screenshots/

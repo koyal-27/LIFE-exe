@@ -1,9 +1,20 @@
-# C++ executables
+# C++ executable
 *.exe
 
 # Python cache
 __pycache__/
 *.pyc
 
+# Virtual environment
+venv/
+.venv/
+
 # VS Code settings
 .vscode/
+
+# Python environment files
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
