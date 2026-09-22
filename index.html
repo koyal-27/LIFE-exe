@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decision Engine UI</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+    body { background-color: #0b0714; color: #e2d9f3; padding: 30px; }
+    .card { background: #160e25; border: 1px solid #2d1b46; border-radius: 12px; padding: 24px; max-width: 950px; margin: 0 auto; }
+    h2 { color: #c084fc; margin-bottom: 16px; font-size: 1.5rem; }
+    
+    .output-box {
+      background: #08040f;
+      border: 1px solid #28163f;
+      border-radius: 8px;
+      padding: 20px;
+      height: 450px;
+      overflow-y: auto;
+      font-family: 'Consolas', 'Courier New', monospace;
+      color: #d8b4fe;
+      white-space: pre-wrap;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      margin-bottom: 20px;
+    }
+
+    .controls { display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+    .btn {
+      background: #7c3aed;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #6d28d9; }
+    .btn-reset { background: #dc2626; }
+
+    .input-group { display: flex; gap: 10px; }
+    input[type="text"] {
+      flex: 1;
+      background: #08040f;
+      border: 1px solid #28163f;
+      border-radius: 8px;
+      padding: 12px;
+      color: #ffffff;
+      font-size: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h2>LIFE.EXE — Mood Decision Engine</h2>
+    
+    <div class="output-box" id="output">Starting session...</div>
+
+    <div class="controls">
+      <span style="color: #a855f7; font-weight: 600;">Select Option:</span>
+      <button class="btn" onclick="sendInput('1')">1</button>
+      <button class="btn" onclick="sendInput('2')">2</button>
+      <button class="btn" onclick="sendInput('3')">3</button>
+      <button class="btn" onclick="sendInput('4')">4</button>
+      <button class="btn btn-reset" onclick="resetSession()">Restart</button>
+    </div>
+
+    <div class="input-group">
+      <input type="text" id="userInput" placeholder="Type choice number and press Enter..." onkeydown="if(event.key==='Enter') sendCustomInput()">
+      <button class="btn" onclick="sendCustomInput()">Send</button>
+    </div>
+  </div>
+
+  <script>
+    let ws;
+    const outputDiv = document.getElementById('output');
+
+    function connect() {
+      outputDiv.textContent = '';
+      ws = new WebSocket("ws://127.0.0.1:8000/ws/session");
+
+      ws.onmessage = (event) => {
+        outputDiv.textContent += event.data;
+        outputDiv.scrollTop = outputDiv.scrollHeight;
+      };
+
+      ws.onclose = () => {
+        outputDiv.textContent += "\n\n[Process Ended]";
+      };
+    }
+
+    function sendInput(value) {
+      if (ws && ws.readyState === WebSocket.OPEN) {
+        ws.send(value);
+      }
+    }
+
+    function sendCustomInput() {
+      const inputEl = document.getElementById('userInput');
+      const val = inputEl.value.trim();
+      if (val) {
+        sendInput(val);
+        inputEl.value = '';
+      }
+    }
+
+    function resetSession() {
+      if (ws) ws.close();
+      connect();
+    }
+
+    connect();
+  </script>
+
+</body>
+</html>
